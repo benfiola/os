@@ -1,0 +1,9 @@
+CMakeFiles
+install
+*.cmake
+CMakeCache.txt
+Makefile
+*/build
+*/stamp
+*/tmp
+

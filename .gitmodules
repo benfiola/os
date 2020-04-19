@@ -1,6 +1,6 @@
-[submodule "cross-compiler/gcc"]
-	path = cross-compiler/gcc
-	url = git://gcc.gnu.org/git/gcc.git
-[submodule "cross-compiler/binutils"]
-	path = cross-compiler/binutils
+[submodule "cross-compiler/binutils/src"]
+	path = cross-compiler/binutils/src
 	url = git://sourceware.org/git/binutils-gdb.git
+[submodule "cross-compiler/gcc/src"]
+	path = cross-compiler/gcc/src
+	url = git://gcc.gnu.org/git/gcc.git
