@@ -1,6 +1,6 @@
 CURRENT_DIRECTORY := $(abspath $(shell pwd))
-BUILD_DIRECTORY := $(abspath $(CURRENT_DIRECTORY)/../../../build/cross_compiler)
-INSTALL_DIRECTORY := $(abspath $(CURRENT_DIRECTORY)/../../../install/cross_compiler)
+BUILD_DIRECTORY := $(abspath $(CURRENT_DIRECTORY)/../../build/cross_compiler)
+INSTALL_DIRECTORY := $(abspath $(CURRENT_DIRECTORY)/../../install/cross_compiler)
 
 TARGET := "i686-elf"
 NCPU := 8
@@ -28,7 +28,7 @@ clean:
 
 binutils: $(BUILD_DIRECTORY)/binutils
 	cd $(BUILD_DIRECTORY)/binutils && \
-	    $(CURRENT_DIRECTORY)binutils/configure --target=$(TARGET) --prefix=$(INSTALL_DIRECTORY) --with-sysroot --disable-nls --disable-werror && \
+	    $(CURRENT_DIRECTORY)/binutils/configure --target=$(TARGET) --prefix=$(INSTALL_DIRECTORY) --with-sysroot --disable-nls --disable-werror && \
         ${MAKE} -j$(NCPU) && \
         ${MAKE} install
 
