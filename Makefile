@@ -1,27 +1,20 @@
 CURRENT_DIRECTORY := $(abspath $(shell pwd))
 
-.PHONY: iso/all iso/clean kernel/all kernel/clean cross_compiler/all cross_compiler/clean libc/all libc/clean
+SPACE :=
+SPACE +=
 
-iso/all:
-	${MAKE} -C src/iso all
+.PHONY: phony_wildcard_target Makefile
 
-iso/clean:
-	${MAKE} -C src/iso clean
+# use a phony target as a pre-requisite for phony wildcard rules.
+phony_wildcard_target:
 
-kernel/all:
-	${MAKE} -C src/kernel all
+# set empty Makefile target - otherwise will be processed by wildcard pattern.
+Makefile:
 
-kernel/clean:
-	${MAKE} -C src/kernel clean
-
-cross_compiler/all:
-	${MAKE} -C src/cross_compiler all
-
-cross_compiler/clean:
-	${MAKE} -C src/cross_compiler clean
-
-libc/all:
-	${MAKE} -C src/libc all
-
-libc/clean:
-	${MAKE} -C src/libc clean
+# support invoking sub-makefiles in src/<submodule> directories.
+%: phony_wildcard_target
+	$(eval ARGS := $(subst :, ,$*))
+	$(eval SUBTARGET := $(firstword $(ARGS)))
+	$(eval SUBARGS := $(wordlist 2, $(words $(ARGS)), $(ARGS)))
+	$(eval SUBARGS := $(subst $(SPACE),:,$(SUBARGS)))
+	${MAKE} -C src/$(SUBTARGET) $(SUBARGS)
