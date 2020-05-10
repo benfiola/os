@@ -26,10 +26,10 @@ $(BUILD_DIRECTORY)/boot.o: $(BUILD_DIRECTORY)
 	@$(TARGET)-as $(SOURCE_DIRECTORY)/$(ARCH)/boot.s -o $(BUILD_DIRECTORY)/boot.o
 
 $(BUILD_DIRECTORY)/kernel.o: $(BUILD_DIRECTORY)
-	@$(TARGET)-g++ -c $(SOURCE_DIRECTORY)/$(ARCH)/kernel.cpp -o $(BUILD_DIRECTORY)/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
+	@$(TARGET)-g++ -c $(SOURCE_DIRECTORY)/$(ARCH)/kernel.cpp -o $(BUILD_DIRECTORY)/kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti -g
 
 $(BUILD_DIRECTORY)/kernel.bin: $(BUILD_DIRECTORY)/kernel.o $(BUILD_DIRECTORY)/boot.o
-	@$(TARGET)-gcc -T  $(SOURCE_DIRECTORY)/$(ARCH)/linker.ld -o $(BUILD_DIRECTORY)/kernel.bin -ffreestanding -O2 -nostdlib $(BUILD_DIRECTORY)/boot.o $(BUILD_DIRECTORY)/kernel.o -lgcc
+	@$(TARGET)-gcc -T  $(SOURCE_DIRECTORY)/$(ARCH)/linker.ld -o $(BUILD_DIRECTORY)/kernel.bin -ffreestanding -O2 -nostdlib $(BUILD_DIRECTORY)/boot.o $(BUILD_DIRECTORY)/kernel.o -lgcc -g
 
 $(INSTALL_DIRECTORY)/kernel.bin: $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY)/kernel.bin
 	@cp -R $(BUILD_DIRECTORY)/kernel.bin $(INSTALL_DIRECTORY)/kernel.bin

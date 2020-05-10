@@ -13,7 +13,7 @@ Makefile:
 
 # support invoking sub-makefiles in src/<submodule> directories.
 %: phony_wildcard_target
-	$(eval ARGS := $(subst :, ,$*))
+	$(eval ARGS := $(subst :, ,$(MAKECMDGOALS)))
 	$(eval SUBTARGET := $(firstword $(ARGS)))
 	$(eval SUBARGS := $(wordlist 2, $(words $(ARGS)), $(ARGS)))
 	$(eval SUBARGS := $(subst $(SPACE),:,$(SUBARGS)))
