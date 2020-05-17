@@ -46,7 +46,7 @@ build_binutils() {
 }
 
 check_binutils() {
-  which -- "$TARGET-as" || error "$TARGET-as is not on the PATH"
+  command -v "$TARGET-as" || error "$TARGET-as is not on the PATH"
 }
 
 build_gcc() {
@@ -68,7 +68,8 @@ main() {
   echo "Source (binutils): $SOURCE_BINUTILS_DIRECTORY"
   echo "Source (gcc): $SOURCE_GCC_DIRECTORY"
 
-  export CWD="$(pwd)"
+  CWD="$(pwd)"
+  export CWD
   export PREFIX=$INSTALL_DIRECTORY
   export PATH="$PREFIX/bin:$PATH"
 
