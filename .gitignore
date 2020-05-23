@@ -1,4 +1,4 @@
 .idea
-build
-install
 *.cbp
+install
+build

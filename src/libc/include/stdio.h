@@ -1,20 +1,20 @@
-#ifndef _STDIO_H
-#define _STDIO_H 1
+//
+// Created by benfiola on 5/24/20.
+//
 
-#include <sys/cdefs.h>
-
-#define EOF (-1)
+#ifndef OS_STDIO_H
+#define OS_STDIO_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int printf(const char* __restrict, ...);
-int putchar(int);
-int puts(const char*);
+int printf(const char *format, ...);
+int putchar(int c);
+int puts(const char *str);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif //OS_STDIO_H

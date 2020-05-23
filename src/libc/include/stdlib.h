@@ -1,17 +1,11 @@
-#ifndef _STDLIB_H
-#define _STDLIB_H 1
+//
+// Created by benfiola on 5/24/20.
+//
 
-#include <sys/cdefs.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#ifndef OS_STDLIB_H
+#define OS_STDLIB_H
 
 __attribute__((__noreturn__))
 void abort(void);
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+#endif //OS_STDLIB_H

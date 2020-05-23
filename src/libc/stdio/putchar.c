@@ -1,15 +1,17 @@
+//
+// Created by benfiola on 5/25/20.
+//
+
 #include <stdio.h>
 
-#if defined(__is_libk)
-#include <kernel/tty.h>
+#if defined(libc_kernel)
+#include <kernel/terminal.h>
 #endif
 
-int putchar(int ic) {
-#if defined(__is_libk)
-	char c = (char) ic;
-	terminal_write(&c, sizeof(c));
+int putchar(int c) {
+#if defined(libc_kernel)
+    write((char *)&c);
 #else
-	// TODO: Implement stdio and the write system call.
 #endif
-	return ic;
+    return 0;
 }
