@@ -36,9 +36,6 @@ qemu-system-i386 -cdrom (install path)/os.iso
 Here are a few configuration pointers that will help you get
  on your feet a lil' quicker:
 
-* Build, Execution and Deployment -> Toolchains
-  * Ensure this points to your cross-compiler.
-  * Make sure your cross-compiler is the default (move to top of list)
 * Build, Execution and Deployment -> CMake
   * Ensure each profile uses the cross-compiler toolchain
   * CMake Options:
