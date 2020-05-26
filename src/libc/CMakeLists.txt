@@ -14,11 +14,9 @@ ADD_LIBRARY(
         ${LIBC_SOURCES}
 )
 # define headers visibility
+# external consumers should rely upon the SYSROOT for headers.
 TARGET_INCLUDE_DIRECTORIES(
         libc-user
-        PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -31,17 +29,16 @@ ADD_LIBRARY(
         ${LIBC_SOURCES}
 )
 # define headers visibility
+# external consumers should rely upon the SYSROOT for headers.
 TARGET_INCLUDE_DIRECTORIES(
         libc-kernel
-        PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
-TARGET_LINK_LIBRARIES(libc-kernel kernel)
-
 # specify ifdef indicating compiling for kernel-mode
 TARGET_COMPILE_DEFINITIONS(libc-kernel PRIVATE libc_kernel)
+
+# unfortunately TARGET_COMPILE_OPTIONS apples to assemblers as well.
+# this is the alternative.
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ffreestanding")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffreestanding")

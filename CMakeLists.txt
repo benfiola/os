@@ -11,24 +11,30 @@ SET(CMAKE_CXX_STANDARD 11)
 ADD_SUBDIRECTORY(src/kernel)
 ADD_SUBDIRECTORY(src/libc)
 
-# install the multiboot kernel image to the boot directory
+# on install, prepare the sysroot.
 INSTALL(
     TARGETS kernel-bin
-    DESTINATION boot
-)
-# install the grub menu entry pointing to the kernel image
-INSTALL(
-        FILES src/grub/grub.cfg
-        DESTINATION boot/grub/
-)
-# install userspace headers to usr/local/include
-INSTALL(
-    DIRECTORY src/kernel/include src/libc/include
-    DESTINATION usr/local/include/
+    DESTINATION ${CMAKE_SYSROOT}/boot
 )
 INSTALL(
     TARGETS libc-user
-    DESTINATION usr/local/lib
+    DESTINATION ${CMAKE_SYSROOT}/usr/local/lib
+)
+INSTALL(
+    FILES src/grub/grub.cfg
+    DESTINATION ${CMAKE_SYSROOT}/boot/grub/
 )
 
-ADD_CUSTOM_TARGET(clion_install)
+# expose a target to copy kernel/libc headers
+ADD_CUSTOM_TARGET(
+        copy-headers
+        COMMAND mkdir -p ${CMAKE_SYSROOT}/usr/include/
+        COMMAND cp -R ${CMAKE_CURRENT_SOURCE_DIR}/src/kernel/include/* ${CMAKE_SYSROOT}/usr/include/
+        COMMAND cp -R ${CMAKE_CURRENT_SOURCE_DIR}/src/libc/include/* ${CMAKE_SYSROOT}/usr/include/
+)
+
+# expose a target to build an .iso from the sysroot
+ADD_CUSTOM_TARGET(
+        iso
+        COMMAND grub-mkrescue -o ${CMAKE_INSTALL_PREFIX}/os.iso ${CMAKE_SYSROOT}
+)
