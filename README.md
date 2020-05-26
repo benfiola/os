@@ -9,6 +9,28 @@ If you've built your own cross-compiler, you'll need to create
 
 Alternatively, you can try your luck with this [helper script](./toolchain/main.sh).
  
+### Working with CMake
+
+With your toolchain file in hand, building the project is a matter of:
+
+```shell script
+cd (build_directory)
+cmake (path to source root) -DCMAKE_TOOLCHAIN_FILE=(path to toolchain file) -DCMAKE_INSTALL_PREFIX=(path to install directory)
+# sync headers changes with sysroot
+make copy-headers
+# build
+make all
+# install
+make install
+```
+
+With a built sysroot, you can generate an `iso` that you can use with `qemu`:
+
+```shell script
+make iso
+qemu-system-i386 -cdrom (install path)/os.iso
+```
+
 ### Working within CLion
 
 Here are a few configuration pointers that will help you get
@@ -24,7 +46,11 @@ Here are a few configuration pointers that will help you get
     * -DCMAKE_INSTALL_PREFIX=(absolute installation path)
   * Generation path: (build directory)
 * Run Configurations
-  * For any CMake Application target that needs an executable, use `/usr/bin/true`'
+  * Templates
+    * 'Delete run configurations for missing CMake targets automatically': False
+      * When CLion can't detect the run targets for CMake (say, bad toolchain) - it deletes
+        all run configurations.  Including ones other run configurations depend upon. 
+  * For any CMake Application target that needs an executable, use `/usr/bin/true`.  
     * Do this for `copy-headers` and `iso`
   * Create a CMake Application:
     * Name: "Build and install all targets"
