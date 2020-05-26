@@ -37,7 +37,6 @@ Here are a few configuration pointers that will help you get
  on your feet a lil' quicker:
 
 * Build, Execution and Deployment -> CMake
-  * Ensure each profile uses the cross-compiler toolchain
   * CMake Options:
     * -DCMAKE_TOOLCHAIN_FILE=(path to .cmake toolchain file) 
     * -DCMAKE_INSTALL_PREFIX=(absolute installation path)

@@ -20,13 +20,6 @@ ADD_LIBRARY(
         ${KERNEL_ARCH_SOURCES}
         ${KERNEL_ARCH_EPILOGUE_SOURCES}
 )
-# define headers visibility
-# external consumers should rely upon the SYSROOT for headers.
-TARGET_INCLUDE_DIRECTORIES(
-        kernel
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
-)
 # specify ifdef indicating that kernel code is being compiled
 TARGET_COMPILE_DEFINITIONS(kernel PRIVATE kernel)
 # link the kernel against the libc-kernel library

@@ -29,8 +29,10 @@ INSTALL(
 ADD_CUSTOM_TARGET(
         copy-headers
         COMMAND mkdir -p ${CMAKE_SYSROOT}/usr/include/
+        COMMAND chmod a+w -R ${CMAKE_SYSROOT}/usr/include
         COMMAND cp -R ${CMAKE_CURRENT_SOURCE_DIR}/src/kernel/include/* ${CMAKE_SYSROOT}/usr/include/
         COMMAND cp -R ${CMAKE_CURRENT_SOURCE_DIR}/src/libc/include/* ${CMAKE_SYSROOT}/usr/include/
+        COMMAND chmod a-w -R ${CMAKE_SYSROOT}/usr/include/
 )
 
 # expose a target to build an .iso from the sysroot

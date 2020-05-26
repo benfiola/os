@@ -13,13 +13,6 @@ ADD_LIBRARY(
         libc-user
         ${LIBC_SOURCES}
 )
-# define headers visibility
-# external consumers should rely upon the SYSROOT for headers.
-TARGET_INCLUDE_DIRECTORIES(
-        libc-user
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
-)
 # specify ifdef indicating compiling for user-mode
 TARGET_COMPILE_DEFINITIONS(libc-user PRIVATE libc_user)
 
@@ -27,13 +20,6 @@ TARGET_COMPILE_DEFINITIONS(libc-user PRIVATE libc_user)
 ADD_LIBRARY(
         libc-kernel
         ${LIBC_SOURCES}
-)
-# define headers visibility
-# external consumers should rely upon the SYSROOT for headers.
-TARGET_INCLUDE_DIRECTORIES(
-        libc-kernel
-        PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 # specify ifdef indicating compiling for kernel-mode
 TARGET_COMPILE_DEFINITIONS(libc-kernel PRIVATE libc_kernel)
