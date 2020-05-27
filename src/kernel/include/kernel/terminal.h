@@ -1,3 +1,5 @@
 
-
-void write(char* word);
+namespace Terminal {
+    void Initialize();
+    void Write(char* word);
+}
