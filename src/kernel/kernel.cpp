@@ -6,9 +6,8 @@
 void kernel_main() {
     Terminal::Initialize();
 
-    for(uint8_t x = (int)'A'; x <= (int)'z'; x++) {
-        char c = (char)x;
-        Terminal::Write(&c);
+    for(uint8_t x = (uint8_t)'A'; x <= (uint8_t)'z'; x++) {
+        Terminal::WriteString((char *) &x);
     }
 }
 

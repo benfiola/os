@@ -1,6 +1,7 @@
 #ifndef KERNEL_VGA_H
 #define KERNEL_VGA_H
 
+#include <kernel/terminal.h>
 #include <stdint-gcc.h>
 
 namespace VGA {
@@ -23,24 +24,10 @@ namespace VGA {
         White = 0xF,
     };
 
-    struct Cursor {
-        Color fg;
-        Color bg;
-        int x;
-        int y;
-    };
+    static uint16_t* buffer = (uint16_t *) 0xB8000;
 
-    struct Screen {
-        uint16_t* buffer;
-        uint16_t height;
-        uint16_t width;
-        Cursor cursor;
-    };
-
-    void Initialize();
-    void SetColor(Color fg, Color bg);
-    void WriteChar(char c);
-    void WriteLine(char* line);
+    uint16_t CreateTextData(Color fg, Color bg, char c);
+    Color TranslateTerminalColor(Terminal::Color c);
 }
 
 
