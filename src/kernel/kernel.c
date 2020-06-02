@@ -4,10 +4,10 @@
 #include <stdint.h>
 
 void kernel_main() {
-    Terminal::Initialize();
+    Terminal_initialize();
 
     for(uint8_t x = (uint8_t)'A'; x <= (uint8_t)'z'; x++) {
-        Terminal::WriteString((char *) &x);
+        Terminal_writeString((char *) &x);
     }
 }
 

@@ -1,31 +1,30 @@
 #ifndef KERNEL_TERMINAL_H
 #define KERNEL_TERMINAL_H 1
 
-namespace Terminal {
-    enum Color {
-        Black = 0,
-        White = 1
-    };
+enum Terminal_Color {
+    Terminal_Color_Black = 0,
+    Terminal_Color_White = 1
+};
 
-    struct State {
-        Color fgColor;
-        Color bgColor;
-        int x;
-        int y;
-        int height;
-        int width;
-    };
+struct Terminal_State {
+    enum Terminal_Color fgColor;
+    enum Terminal_Color bgColor;
+    int x;
+    int y;
+    int height;
+    int width;
+};
 
-    void Initialize();
+void Terminal_initialize();
 
-    void SetBgColor(Color c);
-    Color GetBgColor();
+void Terminal_setBgColor(enum Terminal_Color c);
+enum Terminal_Color Terminal_getBgColor();
 
-    void SetFgColor(Color c);
-    Color GetFgColor();
+void Terminal_setFgColor(enum Terminal_Color c);
+enum Terminal_Color Terminal_getFgColor();
 
-    void WriteChar(char word);
-    void WriteString(char* word);
-}
+void Terminal_writeChar(char word);
+void Terminal_writeString(char* word);
+
 
 #endif
