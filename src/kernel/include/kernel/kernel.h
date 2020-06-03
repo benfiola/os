@@ -1,6 +1,8 @@
 #ifndef KERNEL_KERNEL_H
 #define KERNEL_KERNEL_H 1
 
-void kernel_main();
+#include "multiboot.h"
+
+void kernel_main(multiboot_info_t* mbd, unsigned int magic);
 
 #endif

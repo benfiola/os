@@ -25,6 +25,9 @@ stack_top:
 _start:
     /* set up stack pointer */
 	mov $stack_top, %esp
+	/* pre-requisites for obtaining BIOS mmap data via multiboot */
+	push %eax
+	push %ebx
 	/* call kernel entry point */
 	call kernel_main
 	/* if kernel_main shouldn't exit - if it does, just hang */
