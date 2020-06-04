@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <string.h>
+#include <stdio.h>
 #include "vga.h"
 
 static struct Terminal_State state;
@@ -11,6 +12,8 @@ void Terminal_initialize() {
     state.y = 0;
     state.bgColor = Terminal_Color_Black;
     state.fgColor = Terminal_Color_White;
+
+    puts("Terminal: Initialized");
 }
 
 void Terminal_setBgColor(enum Terminal_Color bgColor) {
@@ -61,6 +64,11 @@ void Terminal_cursorAdvance() {
 }
 
 void Terminal_writeChar(char c) {
+    if(c == '\n') {
+        Terminal_cursorAdvanceLine();
+        return;
+    }
+
     uint16_t position = (state.width * state.y) + state.x;
 
     enum VGA_Color fg = VGA_convertTerminalColor(state.fgColor);
@@ -69,12 +77,3 @@ void Terminal_writeChar(char c) {
     VGA_buffer[position] = VGA_createData(fg, bg, c);
     Terminal_cursorAdvance();
 }
-
-void Terminal_writeString(char *line) {
-    for(size_t x = 0; x < strlen(line); x++) {
-        Terminal_writeChar(line[x]);
-    }
-    Terminal_cursorAdvanceLine();
-}
-
-

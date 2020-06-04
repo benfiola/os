@@ -2,14 +2,13 @@
 #include <kernel/kernel.h>
 #include <kernel/pmm.h>
 #include <kernel/terminal.h>
+#include <stdio.h>
 
 void kernel_main(multiboot_info_t* mbd, unsigned int magic) {
     Terminal_initialize();
-
-    if((mbd->flags & 1) == 0) {
-        Terminal_writeString("Non-continguous memory region detected");
+    if(magic != MULTIBOOT_BOOTLOADER_MAGIC ) {
+        puts("ERROR: Kernel: Multiboot header does not match");
     }
-    PMM_initialize();
-    Terminal_writeString("Done");
+    PMM_initialize(mbd);
 }
 

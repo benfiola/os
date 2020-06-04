@@ -10,8 +10,9 @@
 
 int putchar(int c) {
 #if defined(libc_kernel)
-    write((char *)&c);
+    Terminal_writeChar(c);
+    return c;
 #else
+    return -1;
 #endif
-    return 0;
 }
