@@ -12,8 +12,7 @@ void PMM_initialize(multiboot_info_t* mbd) {
         unsigned int total = mbd->mmap_length;
         multiboot_memory_map_t* curr = (multiboot_memory_map_t*) mbd->mmap_addr;
         while(total > 0) {
-            printf("%f", 80372.1239185123);
-            printf("Address: %#200.200x, Length: %i, Type: %i", curr->addr, curr->len, curr->type);
+            printf("Address: %x, Length: %lli, Type: %i\n", curr->addr, curr->len, curr->type);
             unsigned int size = curr->size + sizeof(curr->size);
             total -= size;
             curr = (multiboot_memory_map_t*) (((unsigned int) curr) + size);
