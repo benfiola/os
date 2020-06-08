@@ -165,7 +165,13 @@ int printf(const char* format, ...) {
                 // signed integer
                 //print decimal unsigned int
                 long long value;
-                value = va_arg(args, long long);
+                if(size == 2) {
+                    value = va_arg(args, long long);
+                } else if(size == 1) {
+                    value = va_arg(args, long);
+                } else {
+                    value = va_arg(args, int);
+                }
                 char negative = (value < 0);
 
                 unsigned int index = sizeof(long long) * 8;
@@ -194,17 +200,58 @@ int printf(const char* format, ...) {
             } else if(*current == 'e' || *current == 'E') {
                 //scientific notation
                 char uppercase = (*current == 'F');
-                double value = va_arg(args, double);
-                struct double_struct* value_struct = (struct double_struct*) &value;
-                int test = 0;
-            } else if(*current == 'f' || *current == 'F') {
-                char uppercase = (*current == 'F');
-                double value = va_arg(args, double);
-                long whole = (long) value;
-                double fraction = value - whole;
+                long double value;
+                if(size == 1) {
+                    value = va_arg(args, long double);
+                } else {
+                    value = va_arg(args, double);
+                }
+                long long whole = (long long) value;
+                long double fraction = value - whole;
 
                 // print whole number
-                unsigned long index = sizeof(unsigned long) * 8;
+                unsigned long index = sizeof(long long) * 8;
+                char buffer[index];
+
+                if(whole == 0) {
+                    buffer[--index] = '0';
+                }
+                while(whole != 0) {
+                    buffer[--index] = '0' + (whole % 10);
+                    whole = whole/10;
+                }
+
+                for(; index < sizeof(buffer); index++) {
+                    putchar(buffer[index]);
+                    written = written + 1;
+                }
+
+                putchar('.');
+                written = written + 1;
+
+                //print fraction
+                int decimalPlace = 0;
+                while(decimalPlace < precision) {
+                    fraction = fraction * 10;
+                    int leadingDecimal = (int) fraction % 10;
+                    fraction = fraction - leadingDecimal;
+                    putchar('0' + leadingDecimal);
+                    written = written + 1;
+                    decimalPlace = decimalPlace + 1;
+                }
+            } else if(*current == 'f' || *current == 'F') {
+                char uppercase = (*current == 'F');
+                long double value;
+                if(size == 1) {
+                    value = va_arg(args, long double);
+                } else {
+                    value = va_arg(args, double);
+                }
+                long long whole = (long long) value;
+                long double fraction = value - whole;
+
+                // print whole number
+                unsigned long index = sizeof(long long) * 8;
                 char buffer[index];
 
                 if(whole == 0) {
@@ -239,9 +286,16 @@ int printf(const char* format, ...) {
                 //uses the shorter of %E or %F
             } else if(*current == 'o') {
                 //print octal unsigned int
-                unsigned int value = va_arg(args, unsigned int);
+                unsigned long long value;
+                if(size == 2) {
+                    value = va_arg(args, unsigned long long);
+                } else if(size == 1) {
+                    value = va_arg(args, unsigned long);
+                } else {
+                    value = va_arg(args, unsigned int);
+                }
 
-                unsigned int index = sizeof(unsigned int) * 8;
+                unsigned int index = sizeof(long long) * 8;
                 char buffer[index];
 
                 if(value == 0) {
@@ -271,9 +325,16 @@ int printf(const char* format, ...) {
                 }
             } else if(*current == 'u') {
                 //print decimal unsigned int
-                unsigned int value = va_arg(args, unsigned int);
+                unsigned long long value;
+                if(size == 2) {
+                    value = va_arg(args, unsigned long long);
+                } else if(size == 1) {
+                    value = va_arg(args, unsigned long);
+                } else {
+                    value = va_arg(args, unsigned int);
+                }
 
-                unsigned int index = sizeof(unsigned int) * 8;
+                unsigned int index = sizeof(long long) * 8;
                 char buffer[index];
 
                 if(value == 0) {
@@ -291,9 +352,16 @@ int printf(const char* format, ...) {
             } else if(*current == 'x' || *current == 'X') {
                 //print hex
                 char uppercase = *current == 'X';
-                unsigned int value = va_arg(args, unsigned int);
+                unsigned long long value;
+                if(size == 2) {
+                    value = va_arg(args, unsigned long long);
+                } else if(size == 1) {
+                    value = va_arg(args, unsigned long);
+                } else {
+                    value = va_arg(args, unsigned int);
+                }
 
-                unsigned int index = sizeof(unsigned int) * 8;
+                unsigned int index = sizeof(long long) * 8;
                 char buffer[index];
 
                 if(value == 0) {
@@ -324,7 +392,7 @@ int printf(const char* format, ...) {
                 //print pointer - implementation defined
                 unsigned int value = va_arg(args, unsigned int);
 
-                unsigned int index = sizeof(unsigned int) * 8;
+                unsigned int index = sizeof(long long) * 8;
                 char buffer[index];
 
                 if(value == 0) {

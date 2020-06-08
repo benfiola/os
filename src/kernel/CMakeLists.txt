@@ -41,5 +41,5 @@ EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} --print-file-name=crtend.o OUTPUT_ST
 # attempt (as best as we can) to define linker order.
 # it looks like the order for crti.s/crtbegin.o and crtn.s/crtend.o are reversed
 # but things appear to work, and i couldn't find a way to fix it so i'll leave it as is.
-SET(CMAKE_C_LINK_EXECUTABLE "${CMAKE_C_COMPILER} ${CMAKE_C_LINK_FLAGS} ${LINK_FLAGS} ${CRTBEGIN} <OBJECTS> ${CRTEND} <LINK_LIBRARIES>  -o <TARGET>")
-SET(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_COMPILER} ${CMAKE_CXX_LINK_FLAGS} ${LINK_FLAGS} ${CRTBEGIN} <OBJECTS> ${CRTEND} <LINK_LIBRARIES> -o <TARGET>")
+SET(CMAKE_C_LINK_EXECUTABLE "${CMAKE_C_COMPILER} ${CMAKE_C_LINK_FLAGS} ${LINK_FLAGS} ${CRTBEGIN} <OBJECTS> ${CRTEND} <LINK_LIBRARIES> -lgcc -o <TARGET>")
+SET(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_COMPILER} ${CMAKE_CXX_LINK_FLAGS} ${LINK_FLAGS} ${CRTBEGIN} <OBJECTS> ${CRTEND} <LINK_LIBRARIES>  -lgcc -o <TARGET>")
